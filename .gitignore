@@ -1,0 +1,9 @@
+.pytest_cache/
+.idea/
+.venv/
+**/__pycache__/
+
+yt-sorter.log
+poetry.lock
+
+**.pyc

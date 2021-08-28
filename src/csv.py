@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Any, List
 
 from .lib.logging import get_logger
+from .track_files import target_file_exists
 
 log = get_logger("csv")
 
@@ -42,4 +43,11 @@ def load_file(csv_filename: str) -> List[Any]:
 
 
 def search_for_title_matches(search_title: str, csv_records: List[Any]) -> List[Any]:
-    return list(filter(lambda x: x.title == search_title, csv_records))
+    csv_matches = list(filter(lambda x: x.title == search_title, csv_records))
+    # Strip out the matches where the files have already been created by the metadata sorting
+    valid_csv_matches = []
+    for match in csv_matches:
+        if not target_file_exists(match):
+            valid_csv_matches.append(match)
+
+    return valid_csv_matches

@@ -1,5 +1,4 @@
-import csv
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from io import StringIO
 from unittest.mock import patch
 
@@ -78,6 +77,7 @@ class CsvSearchTestCase:
     description: str
     search_term: str
     csv_records: list[CSVTrack]
+    filesystem_files: list[list[str]]
     expected_output: list[CSVTrack]
 
 
@@ -90,6 +90,7 @@ csv_search_test_cases = [
                 title="song 2", album="album 1", artist="artist 1", duration=123.45
             )
         ],
+        filesystem_files=[],
         expected_output=[],
     ),
     CsvSearchTestCase(
@@ -100,6 +101,7 @@ csv_search_test_cases = [
                 title="song 1", album="album 1", artist="artist 1", duration=123.45
             )
         ],
+        filesystem_files=[],
         expected_output=[
             CSVTrack(
                 title="song 1", album="album 1", artist="artist 1", duration=123.45
@@ -117,6 +119,7 @@ csv_search_test_cases = [
                 title="song 1", album="album 2", artist="artist 2", duration=123.45
             ),
         ],
+        filesystem_files=[],
         expected_output=[
             CSVTrack(
                 title="song 1", album="album 1", artist="artist 1", duration=123.45
@@ -140,6 +143,7 @@ csv_search_test_cases = [
                 title="song 2", album="album 2", artist="artist 2", duration=123.45
             ),
         ],
+        filesystem_files=[],
         expected_output=[
             CSVTrack(
                 title="song 1", album="album 1", artist="artist 1", duration=123.45
@@ -149,15 +153,39 @@ csv_search_test_cases = [
             ),
         ],
     ),
+    CsvSearchTestCase(
+        description="Multiple entries in CSV, all matching the search term, one album's version exists already",
+        search_term="song 1",
+        csv_records=[
+            CSVTrack(
+                title="song 1", album="album 1", artist="artist 1", duration=123.45
+            ),
+            CSVTrack(
+                title="song 1", album="album 2", artist="artist 2", duration=123.45
+            ),
+        ],
+        filesystem_files=[["01 - song 1.mp3"], []],
+        expected_output=[
+            CSVTrack(
+                title="song 1", album="album 2", artist="artist 2", duration=123.45
+            ),
+        ],
+    ),
 ]
 
 
+@patch("os.listdir")
 @pytest.mark.parametrize(
     "testcase",
     csv_search_test_cases,
     ids=[x.description for x in csv_search_test_cases],
 )
-def test_csv_search(testcase):
+def test_csv_search(list_dir_mock, testcase):
+    if len(testcase.filesystem_files) == 0:
+        list_dir_mock.return_value = testcase.filesystem_files
+    else:
+        list_dir_mock.side_effect = testcase.filesystem_files
+
     actual = search_for_title_matches(testcase.search_term, testcase.csv_records)
     expected = testcase.expected_output
 

@@ -20,7 +20,7 @@ if __name__ == "__main__":
         matching_files = track_files.search_names(record.title)
         for match_record in sorter.sort_lists(matching_csv_records, matching_files):
             track_data.append(match_record)
-        print("")
+    print("")
 
     print("Moving the matching files into their new homes")
     progress_bar_total = len(track_data)

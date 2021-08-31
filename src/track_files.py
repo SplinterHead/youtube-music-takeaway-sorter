@@ -33,8 +33,9 @@ def target_file_exists(track_data: Any) -> bool:
     output_dir = f"{track_data.artist}/{track_data.album}"
     target_file_regex = f"([0-9]+ - )?{track_data.title}\\.mp3"
 
-    for filename in os.listdir(output_dir):
-        if re.search(target_file_regex, filename):
-            exists = True
+    if os.path.isdir(output_dir):
+        for filename in os.listdir(output_dir):
+            if re.search(target_file_regex, filename):
+                exists = True
 
     return exists

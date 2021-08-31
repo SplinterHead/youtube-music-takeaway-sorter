@@ -171,16 +171,32 @@ csv_search_test_cases = [
             ),
         ],
     ),
+    CsvSearchTestCase(
+        description="Multiple entries in CSV, all matching the search term, all album versions exist already",
+        search_term="song 1",
+        csv_records=[
+            CSVTrack(
+                title="song 1", album="album 1", artist="artist 1", duration=123.45
+            ),
+            CSVTrack(
+                title="song 1", album="album 2", artist="artist 2", duration=123.45
+            ),
+        ],
+        filesystem_files=[["01 - song 1.mp3"], ["03 - song 1.mp3"]],
+        expected_output=[],
+    ),
 ]
 
 
 @patch("os.listdir")
+@patch("os.path.isdir")
 @pytest.mark.parametrize(
     "testcase",
     csv_search_test_cases,
     ids=[x.description for x in csv_search_test_cases],
 )
-def test_csv_search(list_dir_mock, testcase):
+def test_csv_search(is_dir_mock, list_dir_mock, testcase):
+    is_dir_mock = True
     if len(testcase.filesystem_files) == 0:
         list_dir_mock.return_value = testcase.filesystem_files
     else:

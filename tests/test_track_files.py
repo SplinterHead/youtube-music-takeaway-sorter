@@ -115,17 +115,19 @@ file_exists_test_cases = [
             duration=123,
         ),
         expected=True,
-    ),
+    )
 ]
 
 
 @patch("os.listdir")
+@patch("os.path.isdir")
 @pytest.mark.parametrize(
     "testcase",
     file_exists_test_cases,
     ids=[x.description for x in file_exists_test_cases],
 )
-def test_track_file_exists(list_dir_mock, testcase):
+def test_track_file_exists(is_dir_mock, list_dir_mock, testcase):
+    is_dir_mock = True
     list_dir_mock.return_value = testcase.file_names
 
     actual = target_file_exists(testcase.track_data)

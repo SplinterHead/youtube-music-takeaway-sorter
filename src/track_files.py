@@ -15,7 +15,8 @@ def search_names(track_title: str) -> List[tuple]:
     for filename in os.listdir(MUSIC_ROOT):
         if re.search(filename_regex, filename):
             match_tuple = (filename, find_track_duration(filename))
-            matching_files.append(match_tuple)
+            if match_tuple[1] != 0.0:
+                matching_files.append(match_tuple)
     return matching_files
 
 
@@ -23,7 +24,10 @@ def find_track_duration(filename: str) -> float:
     try:
         full_path = f"{MUSIC_ROOT}/{filename}"
         audio_file = eyed3.load(full_path)
-        return audio_file.info.time_secs
+        if audio_file.info.time_secs is not None:
+            return audio_file.info.time_secs
+        else:
+            return 0.0
     except Exception:
         pass
 

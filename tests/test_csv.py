@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from io import StringIO
 from unittest.mock import patch
 

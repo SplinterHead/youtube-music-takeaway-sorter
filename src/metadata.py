@@ -5,7 +5,7 @@ from typing import Any
 
 import eyed3
 
-from .config import MUSIC_ROOT
+from .config import get_music_root
 from .lib.logging import get_logger
 from .mover import move
 from .progress_bar import progress_bar
@@ -13,6 +13,9 @@ from .progress_bar import progress_bar
 log = get_logger("metadata")
 
 eyed3.log.setLevel("ERROR")
+
+
+MUSIC_ROOT = get_music_root()
 
 
 @dataclass

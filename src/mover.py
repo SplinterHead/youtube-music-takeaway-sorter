@@ -2,10 +2,15 @@ import os
 import re
 import shutil
 
-from .config import DRY_RUN, MOVE_SOURCE, MUSIC_DESTINATION, MUSIC_ROOT
+from .config import get_dry_run, get_move_source, get_music_destination, get_music_root
 from .lib.logging import get_logger
 
 log = get_logger("mover")
+
+DRY_RUN = get_dry_run()
+MOVE_SOURCE = get_move_source()
+MUSIC_DESTINATION = get_music_destination()
+MUSIC_ROOT = get_music_root()
 
 
 def move(source_file: str, destination_dir: str, destination_file: str) -> None:

@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass
 from unittest.mock import PropertyMock, patch
 
@@ -61,6 +62,7 @@ file_search_test_cases = [
 
 @patch("os.listdir")
 @patch("src.track_files.find_track_duration")
+@patch.dict(os.environ, {"MUSIC_ROOT": "/music/root"})
 @pytest.mark.parametrize(
     "testcase",
     file_search_test_cases,

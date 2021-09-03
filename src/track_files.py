@@ -4,7 +4,9 @@ from typing import Any, List
 
 import eyed3
 
-from .config import MUSIC_ROOT
+from .config import get_music_root
+
+MUSIC_ROOT = get_music_root()
 
 
 def search_names(track_title: str) -> List[tuple]:

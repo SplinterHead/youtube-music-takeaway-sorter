@@ -38,12 +38,15 @@ poetry install
 ```
 
 ### Configure
-Next, check the configuration at `src/config.py`.
-This file should represent the relevant paths to the existing music files, 
-the CSV of metadata, and the desired directory for the music to end up in. 
+The sorter reads the following environment variables:
 
-There are also options for running the sorter in dry run mode to output what would be done 
-without changing anything, and whether to copy or move the original file.
+| Variable          | Purpose                                                                           | Default                                   |
+|---                |---                                                                                |---                                        |
+| MUSIC_ROOT        | The full path to the directory containing the music files                         | None [Must be set]                        |
+| MUSIC_DESTINATION | The full path to the directory where the tracks should be organised               | `{MUSIC_ROOT}/organised/`                 |
+| CSV_PATH          | The full path to the CSV file                                                     | `{MUSIC_ROOT}/music-uploads-metadata.csv` |
+| MOVE_SOURCE       | Whether to move the file from ROOT to DESTINATION (True), or just copy it (False) | False                                     |
+| DRY_RUN           | Run in dry run mode to not affect the files, but output the logs                  | False                                     |
 
 ### Run
 With all that in place, run either the `make` or `poetry` commands to execute the sorter

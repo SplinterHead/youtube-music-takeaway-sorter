@@ -31,4 +31,4 @@ if __name__ == "__main__":
             mover.move(
                 track.filename, f"{track.artist}/{track.album}", f"{track.title}.mp3"
             )
-        print("")
+    print("")

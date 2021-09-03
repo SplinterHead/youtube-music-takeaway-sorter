@@ -24,7 +24,7 @@ def find_track_duration(filename: str) -> float:
     try:
         full_path = f"{MUSIC_ROOT}/{filename}"
         audio_file = eyed3.load(full_path)
-        if audio_file.info.time_secs is not None:
+        if audio_file is not None:
             return audio_file.info.time_secs
         else:
             return 0.0

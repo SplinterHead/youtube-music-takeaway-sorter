@@ -89,7 +89,7 @@ track_duration_test_case = [
         expected_duration=10.0,
     ),
     TrackDurationTestCase(
-        description="File with None duration returns zero",
+        description="Invalid audio file returns zero duration",
         file_duration=None,
         expected_duration=0.0,
     ),
@@ -103,7 +103,10 @@ track_duration_test_case = [
     ids=[x.description for x in track_duration_test_case],
 )
 def test_find_track_duration(eyed3_load_mock, testcase):
-    eyed3_load_mock.return_value.info.time_secs = testcase.file_duration
+    if testcase.file_duration:
+        eyed3_load_mock.return_value.info.time_secs = testcase.file_duration
+    else:
+        eyed3_load_mock.return_value = None
     actual = find_track_duration("not_a_file.vid")
     assert actual == testcase.expected_duration
 

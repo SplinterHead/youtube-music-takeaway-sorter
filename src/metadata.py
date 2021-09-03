@@ -23,6 +23,9 @@ class TrackTags:
     track_no: tuple = (None, None)
     duration: int = -1
 
+    def __repr__(self):
+        return f"{self.title} from the album {self.album} by {self.artist}"
+
 
 def sort_by_metadata() -> None:
     print("Automatically sorting tracks by their MP3 metadata, if present")

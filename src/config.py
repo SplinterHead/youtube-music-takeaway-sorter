@@ -3,7 +3,10 @@ import os
 
 # Current directory for all files
 def get_music_root() -> str:
-    return os.getenv("MUSIC_ROOT")
+    if "MUSIC_ROOT" not in os.environ:
+        exit(1)
+    else:
+        return os.getenv("MUSIC_ROOT")
 
 
 # Where the organised music should end up
@@ -18,9 +21,9 @@ def get_csv_path() -> str:
 
 # Whether to move the file from ROOT to DESTINATION (True), or just copy it (False)
 def get_move_source() -> bool:
-    return os.getenv("MOVE_SOURCE", False)
+    return bool(os.getenv("MOVE_SOURCE", False))
 
 
 # Run in dry run mode to not affect the files, but output the logs
 def get_dry_run() -> bool:
-    return os.getenv("DRY_RUN", False)
+    return bool(os.getenv("DRY_RUN", False))

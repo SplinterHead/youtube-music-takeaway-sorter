@@ -1,17 +1,11 @@
 import logging
-import os
 
 from src import config, csv, metadata, mover, progress_bar, sorter, track_files
-
-
-def check_music_root():
-    if "MUSIC_ROOT" not in os:
-        exit(1)
-
+from src.config import get_music_root
 
 if __name__ == "__main__":
     # Check that the MUSIC_ROOT env var is set
-    check_music_root()
+    get_music_root()
 
     # First sort through using the embedded ID3 tags
     metadata.sort_by_metadata()

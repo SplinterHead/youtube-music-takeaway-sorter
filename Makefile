@@ -10,7 +10,7 @@ format:
 
 .PHONY: test
 test:
-	poetry run pytest -vv -s
+	MUSIC_ROOT="/music/root" poetry run pytest -vv -s
 
 .PHONY: run
 run:

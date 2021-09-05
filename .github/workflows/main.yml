@@ -28,3 +28,5 @@ jobs:
 
       - name: Run the Pytest suite
         run: poetry run pytest
+        env:
+          MUSIC_ROOT: /music/root

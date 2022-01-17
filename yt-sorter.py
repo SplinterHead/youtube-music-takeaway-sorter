@@ -24,6 +24,7 @@ if __name__ == "__main__":
         matching_files = track_files.search_names(record.title)
         for match_record in sorter.sort_lists(matching_csv_records, matching_files):
             track_data.append(match_record)
+    progress_bar.progress_bar(progress_bar_total, progress_bar_total)
     print("")
 
     print("Moving the matching files into their new homes")
@@ -35,4 +36,5 @@ if __name__ == "__main__":
             mover.move(
                 track.filename, f"{track.artist}/{track.album}", f"{track.title}.mp3"
             )
+    progress_bar.progress_bar(progress_bar_total, progress_bar_total)
     print("")

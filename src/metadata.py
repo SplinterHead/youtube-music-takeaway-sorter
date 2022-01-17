@@ -55,6 +55,7 @@ def sort_by_metadata() -> None:
             log.info("- Could not read metadata")
             pass
     # Close off the progress bar cleanly
+    progress_bar(progress_bar_total, progress_bar_total)
     print("")
 
 

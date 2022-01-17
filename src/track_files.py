@@ -12,7 +12,7 @@ MUSIC_DEST = get_music_destination()
 
 def search_names(track_title: str) -> List[tuple]:
     matching_files = []
-    title_quote = re.escape(track_title).replace("'", "_")
+    title_quote = re.escape(track_title).replace("'", "[\'_]")
     # Should search through '(1)..(x)' for extracted duplicates
     filename_regex = f"^{title_quote}(\\([0-9]+\\))?.(mp3|vid)"
     for filename in os.listdir(MUSIC_ROOT):

@@ -4,9 +4,10 @@ from typing import Any, List
 
 import eyed3
 
-from .config import get_music_root
+from .config import get_music_root, get_music_destination
 
 MUSIC_ROOT = get_music_root()
+MUSIC_DEST = get_music_destination()
 
 
 def search_names(track_title: str) -> List[tuple]:
@@ -36,7 +37,7 @@ def find_track_duration(filename: str) -> float:
 
 def target_file_exists(track_data: Any) -> bool:
     exists = False
-    output_dir = f"{track_data.artist}/{track_data.album}"
+    output_dir = f"{MUSIC_DEST}/{track_data.artist}/{track_data.album}"
     target_file_regex = f"([0-9]+ - )?{track_data.title}\\.mp3"
 
     if os.path.isdir(output_dir):

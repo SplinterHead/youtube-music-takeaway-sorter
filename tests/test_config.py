@@ -32,6 +32,7 @@ def test_get_music_root_returns_env_var_when_set(monkeypatch):
 
 
 def test_get_music_destination_returns_default_when_env_not_set(monkeypatch):
+    monkeypatch.setenv("MUSIC_ROOT", FAKE_MUSIC_ROOT)
     if "DESTINATION" in os.environ:
         monkeypatch.delenv("DESTINATION")
     expected = f"{FAKE_MUSIC_ROOT}/Structured"
@@ -49,6 +50,7 @@ def test_get_music_destination_returns_env_var_when_set(monkeypatch):
 
 
 def test_get_csv_path_returns_default_when_env_not_set(monkeypatch):
+    monkeypatch.setenv("MUSIC_ROOT", FAKE_MUSIC_ROOT)
     if "CSV_PATH" in os.environ:
         monkeypatch.delenv("CSV_PATH")
     expected = f"{FAKE_MUSIC_ROOT}/music-uploads-metadata.csv"

@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     print("Moving the matching files into their new homes")
     progress_bar_total = len(track_data)
-    for idx, track in track_data:
+    for idx, track in enumerate(track_data):
         if logging.root.level > logging.INFO:
             progress_bar.progress_bar(idx, progress_bar_total)
         if track.filename is not None:

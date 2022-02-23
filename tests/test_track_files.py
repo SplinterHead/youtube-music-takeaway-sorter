@@ -60,7 +60,6 @@ file_search_test_cases = [
 ]
 
 
-@patch("os.listdir")
 @patch("src.track_files.find_track_duration")
 @patch.dict(os.environ, {"MUSIC_ROOT": "/music/root"})
 @pytest.mark.parametrize(
@@ -68,10 +67,9 @@ file_search_test_cases = [
     file_search_test_cases,
     ids=[x.description for x in file_search_test_cases],
 )
-def test_search_by_title(duration_mock, listdir_mock, testcase):
+def test_search_by_title(duration_mock, testcase):
     duration_mock.side_effect = testcase.durations
-    listdir_mock.return_value = testcase.file_names
-    actual = search_names(testcase.search_term)
+    actual = search_names(testcase.search_term, testcase.file_names)
     expected = testcase.expected
 
     assert actual == expected

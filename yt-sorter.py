@@ -3,7 +3,6 @@ import os
 
 from src import config, csv, metadata, mover, progress_bar, sorter, track_files
 from src.config import get_music_root
-
 from src.lib.logging import get_logger
 
 log = get_logger("main")

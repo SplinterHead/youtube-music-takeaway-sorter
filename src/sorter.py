@@ -4,6 +4,8 @@ from .lib.logging import get_logger
 
 log = get_logger("sorter")
 
+missing_tracks_csv = "missing-tracks.csv"
+
 
 def sort_lists(csv_list: List[Any], os_list: List[tuple]) -> List[Any]:
     log.info(f"{len(csv_list)} CSV records and {len(os_list)} Files to match")
@@ -21,5 +23,22 @@ def sort_lists(csv_list: List[Any], os_list: List[tuple]) -> List[Any]:
             csv_list.pop(csv_list.index(closest_match))
             closest_match.filename = os_file[0]
             output_dict[closest_match.filename] = closest_match
+
+    # Log missing files
+    if len(csv_list) > 0:
+        # Append to missing-tracks CSV file
+        log.debug(f"Missing track file, recording in {missing_tracks_csv}")
+        with open(missing_tracks_csv, "w") as csv_file:
+            for missing_track in csv_list:
+                csv_line = ",".join(
+                    [
+                        missing_track.title,
+                        missing_track.album,
+                        missing_track.artist,
+                        str(missing_track.duration),
+                    ]
+                )
+                csv_file.write(csv_line)
+
     # Reduce dict to a list
     return list(output_dict.values())

@@ -4,6 +4,7 @@
 **/__pycache__/
 
 yt-sorter.log
+missing-tracks.csv
 poetry.lock
 
 **.pyc

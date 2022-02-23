@@ -38,6 +38,8 @@ def find_track_duration(filename: str) -> float:
 def target_file_exists(track_data: Any) -> bool:
     exists = False
     output_dir = f"{MUSIC_DEST}/{track_data.artist}/{track_data.album}"
+    for char in "`*_{}[]()>#+-.!$":
+        track_data.title = track_data.title.replace(char, '.')
     target_file_regex = f"([0-9]+ - )?{track_data.title}\\.mp3"
 
     if os.path.isdir(output_dir):

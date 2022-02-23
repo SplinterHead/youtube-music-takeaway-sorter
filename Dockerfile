@@ -9,7 +9,7 @@ WORKDIR /app
 COPY . .
 
 RUN poetry config virtualenvs.in-project true && \
-    poetry install
+    poetry install --no-dev
 
 ENV MUSIC_ROOT "/music-uploads"
 ENV DESTINATION "/library"

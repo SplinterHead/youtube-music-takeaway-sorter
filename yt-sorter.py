@@ -1,11 +1,16 @@
 import logging
+import os
 
 from src import config, csv, metadata, mover, progress_bar, sorter, track_files
 from src.config import get_music_root
 
+from src.lib.logging import get_logger
+
+log = get_logger("main")
+
 if __name__ == "__main__":
     # Check that the MUSIC_ROOT env var is set
-    get_music_root()
+    MUSIC_ROOT = get_music_root()
 
     # First sort through using the embedded ID3 tags
     # metadata.sort_by_metadata()
@@ -13,16 +18,20 @@ if __name__ == "__main__":
     csv_records = csv.load_file(config.get_csv_path())
     unique_csv_records = set(csv_record.title for csv_record in csv_records)
 
+    # Get a list of all files in the music root
+    os_files_list = os.listdir(MUSIC_ROOT)
+
     # Create a list of all combined CSV records and the filenames of matching files
     track_data = []
 
     progress_bar_total = len(csv_records)
     print("Matching the CSV entries to the files in the root directory")
     for idx, title in enumerate(unique_csv_records):
+        log.info(f"Processing {title}")
         if logging.root.level > logging.INFO:
             progress_bar.progress_bar(idx, progress_bar_total)
         matching_csv_records = csv.search_for_title_matches(title, csv_records)
-        matching_files = track_files.search_names(title)
+        matching_files = track_files.search_names(title, os_files_list)
         for match_record in sorter.sort_lists(matching_csv_records, matching_files):
             track_data.append(match_record)
     progress_bar.progress_bar(progress_bar_total, progress_bar_total)

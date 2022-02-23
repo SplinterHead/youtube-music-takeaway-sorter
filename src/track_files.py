@@ -10,12 +10,12 @@ MUSIC_ROOT = get_music_root()
 MUSIC_DEST = get_music_destination()
 
 
-def search_names(track_title: str) -> List[tuple]:
+def search_names(track_title: str, os_files_list: List[str]) -> List[tuple]:
     matching_files = []
     title_quote = re.escape(track_title).replace("'", "[\'_]")
     # Should search through '(1)..(x)' for extracted duplicates
-    filename_regex = f"^{title_quote}(\\([0-9]+\\))?.(mp3|vid)"
-    for filename in os.listdir(MUSIC_ROOT):
+    filename_regex = f"^{title_quote}(\\([0-9]+\\))?.(mp3|vid)$"
+    for filename in os_files_list:
         if re.search(filename_regex, filename):
             match_tuple = (filename, find_track_duration(filename))
             if match_tuple[1] != 0.0:

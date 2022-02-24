@@ -19,7 +19,8 @@ def move(source_file: str, destination_dir: str, destination_file: str) -> None:
         log.debug(f"Creating new directory for {target_dir}")
         os.makedirs(target_dir)
     if not os.path.isfile(re.escape(destination_file)):
-        destination_file = destination_file.replace("/", "\\/")
+        # destination_file = destination_file.replace("/", "\\/")
+        destination_file = re.escape(destination_file)
 
     log.debug(
         f"{'DRY_RUN: ' if DRY_RUN else ''}{'Mov' if MOVE_SOURCE else 'Copy'}ing {source_file} to {target_dir}/{destination_file}"

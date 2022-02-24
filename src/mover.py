@@ -25,12 +25,6 @@ def move(source_file: str, destination_dir: str, destination_file: str) -> None:
         f"{'DRY_RUN: ' if DRY_RUN else ''}{'Mov' if MOVE_SOURCE else 'Copy'}ing {source_file} to {target_dir}/{destination_file}"
     )
     if not DRY_RUN and not MOVE_SOURCE:
-        shutil.copy(
-            f"{MUSIC_ROOT}/{str.encode(source_file)}",
-            f"{target_dir}/{destination_file}",
-        )
+        shutil.copy(f"{MUSIC_ROOT}/{source_file}", f"{target_dir}/{destination_file}")
     if not DRY_RUN and MOVE_SOURCE:
-        shutil.move(
-            f"{MUSIC_ROOT}/{str.encode(source_file)}",
-            f"{target_dir}/{destination_file}",
-        )
+        shutil.move(f"{MUSIC_ROOT}/{source_file}", f"{target_dir}/{destination_file}")

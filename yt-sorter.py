@@ -36,14 +36,17 @@ if __name__ == "__main__":
     progress_bar.progress_bar(progress_bar_total, progress_bar_total)
     print("")
 
-    print("Moving the matching files into their new homes")
-    progress_bar_total = len(track_data)
-    for idx, track in enumerate(track_data):
-        if logging.root.level > logging.INFO:
-            progress_bar.progress_bar(idx, progress_bar_total)
-        if track.filename is not None:
-            mover.move(
-                track.filename, f"{track.artist}/{track.album}", f"{track.title}.mp3"
-            )
-    progress_bar.progress_bar(progress_bar_total, progress_bar_total)
-    print("")
+    if len(track_data) > 0:
+        print("Moving the matching files into their new homes")
+        progress_bar_total = len(track_data)
+        for idx, track in enumerate(track_data):
+            if logging.root.level > logging.INFO:
+                progress_bar.progress_bar(idx, progress_bar_total)
+            if track.filename is not None:
+                mover.move(
+                    track.filename, f"{track.artist}/{track.album}", f"{track.title}.mp3"
+                )
+        progress_bar.progress_bar(progress_bar_total, progress_bar_total)
+        print("")
+    else:
+        print("No new files discovered")

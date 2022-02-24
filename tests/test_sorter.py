@@ -178,6 +178,51 @@ sorter_test_cases = [
             )
         ],
     ),
+    SorterTestCase(
+        description="Filenames including special characters",
+        csv_list=[
+            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
+            CSVTrack(title="Song 1?", album="Album 1", artist="Artist 1", duration=10),
+            CSVTrack(title="Song-1", album="Album 1", artist="Artist 1", duration=10),
+            CSVTrack(title="Song/1", album="Album 1", artist="Artist 1", duration=10),
+        ],
+        os_list=[
+            ("Song 1.mp3", 10),
+            ("Song 1_.mp3", 10),
+            ("Song-1.mp3", 10),
+            ("Song_1.mp3", 10),
+        ],
+        sorted_list=[
+            CSVTrack(
+                title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+                filename="Song 1.mp3",
+            ),
+            CSVTrack(
+                title="Song 1?",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+                filename="Song 1_.mp3",
+            ),
+            CSVTrack(
+                title="Song-1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+                filename="Song-1.mp3",
+            ),
+            CSVTrack(
+                title="Song/1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+                filename="Song_1.mp3",
+            ),
+        ],
+    ),
 ]
 
 

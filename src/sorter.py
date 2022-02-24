@@ -30,15 +30,7 @@ def sort_lists(csv_list: List[Any], os_list: List[tuple]) -> List[Any]:
         log.debug(f"Missing track file, recording in {missing_tracks_csv}")
         with open(missing_tracks_csv, "w") as csv_file:
             for missing_track in csv_list:
-                csv_line = ",".join(
-                    [
-                        missing_track.title,
-                        missing_track.album,
-                        missing_track.artist,
-                        str(missing_track.duration),
-                    ]
-                )
-                csv_file.write(csv_line)
+                csv_file.write(missing_track.to_csv())
 
     # Reduce dict to a list
     return list(output_dict.values())

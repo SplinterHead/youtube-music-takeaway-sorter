@@ -16,6 +16,9 @@ class CSVTrack:
     duration: float
     filename: str = ""
 
+    def to_csv(self):
+        return ",".join([self.title, self.album, self.artist, str(self.duration)])
+
 
 def parse_row(csv_row: Any) -> Any:
     return CSVTrack(

@@ -5,6 +5,9 @@ from typing import Any, List
 import eyed3
 
 from .config import get_music_destination, get_music_root
+from .lib.logging import get_logger
+
+log = get_logger("track_files")
 
 MUSIC_ROOT = get_music_root()
 MUSIC_DEST = get_music_destination()
@@ -15,6 +18,7 @@ def search_names(track_title: str, os_files_list: List[str]) -> List[tuple]:
     title_quote = re.escape(track_title).replace("'", "['_]")
     # Should search through '(1)..(x)' for extracted duplicates
     filename_regex = f"^{title_quote}(\\([0-9]+\\))?.(mp3|vid)$"
+    log.debug(f"Searching with the expression: {filename_regex}")
     for filename in os_files_list:
         if re.search(filename_regex, filename):
             match_tuple = (filename, find_track_duration(filename))
@@ -38,7 +42,7 @@ def find_track_duration(filename: str) -> float:
 def target_file_exists(track_data: Any) -> bool:
     exists = False
     output_dir = f"{MUSIC_DEST}/{track_data.artist}/{track_data.album}"
-    for char in "`*_{}[]()>#+-.!$":
+    for char in "`'*-_(){}&+:!?$/":
         track_data.title = track_data.title.replace(char, ".")
     target_file_regex = f"([0-9]+ - )?{track_data.title}\\.mp3"
 

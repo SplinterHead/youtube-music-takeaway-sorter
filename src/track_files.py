@@ -14,7 +14,7 @@ MUSIC_DEST = get_music_destination()
 
 
 def safe_name(track_title: str) -> str:
-    for char in "`'*-_(){}&+:!?$/":
+    for char in "`'*-_[](){}&+:!?$/":
         track_title = track_title.replace(char, f"\\{char}")
     return track_title
 

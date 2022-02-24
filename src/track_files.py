@@ -13,11 +13,16 @@ MUSIC_ROOT = get_music_root()
 MUSIC_DEST = get_music_destination()
 
 
+def safe_name(track_title: str) -> str:
+    for char in "`'*-_(){}&+:!?$/":
+        track_title = track_title.replace(char, f"\\{char}")
+    return track_title
+
+
 def search_names(track_title: str, os_files_list: List[str]) -> List[tuple]:
     matching_files = []
-    title_quote = re.escape(track_title).replace("'", "['_]")
     # Should search through '(1)..(x)' for extracted duplicates
-    filename_regex = f"^{title_quote}(\\([0-9]+\\))?.(mp3|vid)$"
+    filename_regex = f"^{safe_name(track_title)}(\\([0-9]+\\))?.(mp3|vid)$"
     log.debug(f"Searching with the expression: {filename_regex}")
     for filename in os_files_list:
         if re.search(filename_regex, filename):
@@ -42,9 +47,7 @@ def find_track_duration(filename: str) -> float:
 def target_file_exists(track_data: Any) -> bool:
     exists = False
     output_dir = f"{MUSIC_DEST}/{track_data.artist}/{track_data.album}"
-    for char in "`'*-_(){}&+:!?$/":
-        track_data.title = track_data.title.replace(char, ".")
-    target_file_regex = f"([0-9]+ - )?{track_data.title}\\.mp3"
+    target_file_regex = f"([0-9]+ - )?{safe_name(track_data.title)}\\.mp3"
 
     if os.path.isdir(output_dir):
         for filename in os.listdir(output_dir):

@@ -44,7 +44,9 @@ if __name__ == "__main__":
                 progress_bar.progress_bar(idx, progress_bar_total)
             if track.filename is not None:
                 mover.move(
-                    track.filename, f"{track.artist}/{track.album}", f"{track.title}.mp3"
+                    track.filename,
+                    f"{track.artist}/{track.album}",
+                    f"{track.title}.mp3",
                 )
         progress_bar.progress_bar(progress_bar_total, progress_bar_total)
         print("")

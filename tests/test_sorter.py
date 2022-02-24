@@ -178,6 +178,30 @@ sorter_test_cases = [
             )
         ],
     ),
+    SorterTestCase(
+        description="Two CSV records and two OS files with same name and duration",
+        csv_list=[
+            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
+            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=12),
+        ],
+        os_list=[("Song 1.mp3", 11), ("Song 1(1).mp3", 11)],
+        sorted_list=[
+            CSVTrack(
+                title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+                filename="Song 1.mp3",
+            ),
+            CSVTrack(
+                title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=12,
+                filename="Song 1(1).mp3",
+            ),
+        ],
+    ),
 ]
 
 

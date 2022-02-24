@@ -57,6 +57,27 @@ file_search_test_cases = [
         search_term="Song 1",
         expected=[("Song 1.mp3", 10.0)],
     ),
+    FileSearchTestCase(
+        description="Filenames including special characters do not match",
+        file_names=["Song 1.mp3", "Song 1_.mp3"],
+        durations=[10.0, 10.0],
+        search_term="Song 1",
+        expected=[("Song 1.mp3", 10.0)],
+    ),
+    FileSearchTestCase(
+        description="Filenames including special characters do match",
+        file_names=["Song 1.mp3", "Song 1_.mp3"],
+        durations=[10.0, 10.0],
+        search_term="Song 1?",
+        expected=[("Song 1_.mp3", 10.0)],
+    ),
+    FileSearchTestCase(
+        description="Multiple filenames including special characters do match correctly",
+        file_names=["Song-1.mp3", "Song 1_.mp3"],
+        durations=[10.0, 10.0],
+        search_term="Song 1?",
+        expected=[("Song 1_.mp3", 10.0)],
+    ),
 ]
 
 

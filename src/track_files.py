@@ -14,9 +14,14 @@ MUSIC_DEST = get_music_destination()
 
 
 def safe_name(track_title: str) -> str:
-    for char in "`'*-_[](){}&+:!?$/":
-        track_title = track_title.replace(char, f"\\{char}")
-    return track_title
+    # Chars replaced by underscore
+    for char in ":?":
+        track_title = track_title.replace(char, "_")
+    # Chars that need to be escaped
+    # for char in "-()":
+    #     track_title = track_title.replace(char, f"\\{char}")
+    # return track_title
+    return re.escape(track_title)
 
 
 def search_names(track_title: str, os_files_list: List[str]) -> List[tuple]:

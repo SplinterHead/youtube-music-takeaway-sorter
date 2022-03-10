@@ -1,31 +1,33 @@
 import os
-import re
 import shutil
 
-from .config import get_dry_run, get_move_source, get_music_destination, get_music_root
+from .config import DIR_UNSAFE_CHARS, DRY_RUN, MOVE_SOURCE, MUSIC_DEST, MUSIC_ROOT
+from .csv import CSVTrack
 from .lib.logging import get_logger
 
 log = get_logger("mover")
 
-DRY_RUN = get_dry_run()
-MOVE_SOURCE = get_move_source()
-MUSIC_DESTINATION = get_music_destination()
-MUSIC_ROOT = get_music_root()
+
+def _path_safe(dir_part: str) -> str:
+    # Chars replaced by underscore
+    for char in DIR_UNSAFE_CHARS:
+        dir_part = dir_part.replace(char, "_")
+    return dir_part
 
 
-def move(source_file: str, destination_dir: str, destination_file: str) -> None:
-    target_dir = f"{MUSIC_DESTINATION}/{destination_dir}"
+def move_csv_track(csv_track: CSVTrack) -> None:
+    source_file = os.path.join(MUSIC_ROOT, csv_track.filename)
+    target_dir = os.path.join(
+        MUSIC_DEST, _path_safe(csv_track.artist), _path_safe(csv_track.album)
+    )
+    target_file = os.path.join(target_dir, r"%s.mp3" % _path_safe(csv_track.title))
     if not os.path.isdir(target_dir):
         log.debug(f"Creating new directory for {target_dir}")
         os.makedirs(target_dir)
-    if not os.path.isfile(re.escape(destination_file)):
-        # destination_file = destination_file.replace("/", "\\/")
-        destination_file = re.escape(destination_file)
 
-    log.debug(
-        f"{'DRY_RUN: ' if DRY_RUN else ''}{'Mov' if MOVE_SOURCE else 'Copy'}ing {source_file} to {target_dir}/{destination_file}"
-    )
-    if not DRY_RUN and not MOVE_SOURCE:
-        shutil.copy(f"{MUSIC_ROOT}/{source_file}", f"{target_dir}/{destination_file}")
-    if not DRY_RUN and MOVE_SOURCE:
-        shutil.move(f"{MUSIC_ROOT}/{source_file}", f"{target_dir}/{destination_file}")
+    log.debug(f"{'Mov' if MOVE_SOURCE else 'Copy'}ing {source_file} to {target_file}")
+    if not DRY_RUN:
+        if MOVE_SOURCE:
+            shutil.move(source_file, target_file)
+        else:
+            shutil.copy(source_file, target_file)

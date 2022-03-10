@@ -1,20 +1,21 @@
 import logging
 import os
 
-from src import config, csv, metadata, mover, progress_bar, sorter, track_files
-from src.config import get_music_root
+from src import csv, metadata, mover, progress_bar, sorter, track_files
+from src.config import CSV_PATH, MUSIC_ROOT
 from src.lib.logging import get_logger
 
 log = get_logger("main")
 
 if __name__ == "__main__":
     # Check that the MUSIC_ROOT env var is set
-    MUSIC_ROOT = get_music_root()
+    if not MUSIC_ROOT:
+        raise "MUSIC_ROOT is not set"
 
     # First sort through using the embedded ID3 tags
     # metadata.sort_by_metadata()
     # Parse the CSV file into records
-    csv_records = csv.load_file(config.get_csv_path())
+    csv_records = csv.load_file(CSV_PATH)
     unique_csv_records = set(csv_record.title for csv_record in csv_records)
 
     # Get a list of all files in the music root
@@ -43,11 +44,7 @@ if __name__ == "__main__":
             if logging.root.level > logging.INFO:
                 progress_bar.progress_bar(idx, progress_bar_total)
             if track.filename is not None:
-                mover.move(
-                    track.filename,
-                    f"{track.artist}/{track.album}",
-                    f"{track.title}.mp3",
-                )
+                mover.move_csv_track(track)
         progress_bar.progress_bar(progress_bar_total, progress_bar_total)
         print("")
     else:

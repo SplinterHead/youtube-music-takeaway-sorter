@@ -11,6 +11,7 @@ log = get_logger("csv")
 @dataclass
 class CSVTrack:
     title: str
+    trunc_title: str
     album: str
     artist: str
     duration: float
@@ -23,6 +24,7 @@ class CSVTrack:
 def parse_row(csv_row: Any) -> Any:
     return CSVTrack(
         title=csv_row["Song Title"],
+        trunc_title=csv_row["Song Title"][:47],
         album=csv_row["Album Title"],
         artist=csv_row["Artist Names"],
         duration=float(csv_row["Duration Seconds"]),
@@ -46,7 +48,7 @@ def load_file(csv_filename: str) -> List[Any]:
 
 
 def search_for_title_matches(search_title: str, csv_records: List[Any]) -> List[Any]:
-    csv_matches = list(filter(lambda x: x.title == search_title, csv_records))
+    csv_matches = list(filter(lambda x: x.trunc_title == search_title, csv_records))
     # Strip out the matches where the files have already been created by the metadata sorting
     valid_csv_matches = []
     for match in csv_matches:

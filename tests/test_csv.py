@@ -19,7 +19,31 @@ def test_parse_csv_row():
     }
 
     expected = CSVTrack(
-        title="song 1", album="album 1", artist="artist 1", duration=123.45
+        title="song 1",
+        trunc_title="song 1",
+        album="album 1",
+        artist="artist 1",
+        duration=123.45,
+    )
+
+    actual = parse_row(csv_content)
+    assert actual == expected
+
+
+def test_parse_csv_row_truncates_title():
+    csv_content = {
+        "Song Title": "a very long song title that should exceed 47 characters",
+        "Album Title": "album 1",
+        "Artist Names": "artist 1",
+        "Duration Seconds": 123.45,
+    }
+
+    expected = CSVTrack(
+        title="a very long song title that should exceed 47 characters",
+        trunc_title="a very long song title that should exceed 47 ch",
+        album="album 1",
+        artist="artist 1",
+        duration=123.45,
     )
 
     actual = parse_row(csv_content)
@@ -39,7 +63,11 @@ csv_load_test_cases = [
         csv_content=f"{CSV_HEADER}\nsong 1,album 1,artist 1,123.45",
         expected_output=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             )
         ],
     ),
@@ -48,10 +76,18 @@ csv_load_test_cases = [
         csv_content=f"{CSV_HEADER}\nsong 1,album 1,artist 1,123.45\nsong 2,album 2,artist 2,12.345",
         expected_output=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 2", album="album 2", artist="artist 2", duration=12.345
+                title="song 2",
+                trunc_title="song 2",
+                album="album 2",
+                artist="artist 2",
+                duration=12.345,
             ),
         ],
     ),
@@ -87,7 +123,11 @@ csv_search_test_cases = [
         search_term="song 1",
         csv_records=[
             CSVTrack(
-                title="song 2", album="album 1", artist="artist 1", duration=123.45
+                title="song 2",
+                trunc_title="song 2",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             )
         ],
         filesystem_files=[],
@@ -98,13 +138,44 @@ csv_search_test_cases = [
         search_term="song 1",
         csv_records=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             )
         ],
         filesystem_files=[],
         expected_output=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
+            )
+        ],
+    ),
+    CsvSearchTestCase(
+        description="Single long title in CSV, matches the search term",
+        search_term="a very long song title that should exceed 47 ch",
+        csv_records=[
+            CSVTrack(
+                title="a very long song title that should exceed 47 characters",
+                trunc_title="a very long song title that should exceed 47 ch",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
+            )
+        ],
+        filesystem_files=[],
+        expected_output=[
+            CSVTrack(
+                title="a very long song title that should exceed 47 characters",
+                trunc_title="a very long song title that should exceed 47 ch",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             )
         ],
     ),
@@ -113,19 +184,35 @@ csv_search_test_cases = [
         search_term="song 1",
         csv_records=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
         filesystem_files=[],
         expected_output=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
     ),
@@ -134,22 +221,42 @@ csv_search_test_cases = [
         search_term="song 1",
         csv_records=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 2", album="album 2", artist="artist 2", duration=123.45
+                title="song 2",
+                trunc_title="song 2",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
         filesystem_files=[],
         expected_output=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
     ),
@@ -158,16 +265,28 @@ csv_search_test_cases = [
         search_term="song 1",
         csv_records=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
         filesystem_files=[["01 - song 1.mp3"], []],
         expected_output=[
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
     ),
@@ -176,10 +295,18 @@ csv_search_test_cases = [
         search_term="song 1",
         csv_records=[
             CSVTrack(
-                title="song 1", album="album 1", artist="artist 1", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 1",
+                artist="artist 1",
+                duration=123.45,
             ),
             CSVTrack(
-                title="song 1", album="album 2", artist="artist 2", duration=123.45
+                title="song 1",
+                trunc_title="song 1",
+                album="album 2",
+                artist="artist 2",
+                duration=123.45,
             ),
         ],
         filesystem_files=[["01 - song 1.mp3"], ["03 - song 1.mp3"]],

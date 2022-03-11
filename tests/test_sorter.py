@@ -18,12 +18,19 @@ sorter_test_cases = [
     SorterTestCase(
         description="Single CSV record and matching OS file",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10)
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            )
         ],
         os_list=[("Song 1.mp3", 10.0)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -34,13 +41,26 @@ sorter_test_cases = [
     SorterTestCase(
         description="Two CSV records and matching OS files",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
-            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=10),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=10,
+            ),
         ],
         os_list=[("Song 1.mp3", 10.0), ("Song 1(1).mp3", 10.0)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -48,6 +68,7 @@ sorter_test_cases = [
             ),
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 2",
                 artist="Artist 2",
                 duration=10,
@@ -58,13 +79,26 @@ sorter_test_cases = [
     SorterTestCase(
         description="Two CSV records but single OS file",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
-            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=10),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=10,
+            ),
         ],
         os_list=[("Song 1.mp3", 10.0)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -75,13 +109,26 @@ sorter_test_cases = [
     SorterTestCase(
         description="Two CSV records of different durations and matching OS files",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
-            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=20),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=20,
+            ),
         ],
         os_list=[("Song 1.mp3", 10.0), ("Song 1(1).mp3", 20.0)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -89,6 +136,7 @@ sorter_test_cases = [
             ),
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 2",
                 artist="Artist 2",
                 duration=20,
@@ -99,12 +147,19 @@ sorter_test_cases = [
     SorterTestCase(
         description="Single CSV record and similar OS file",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10)
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            )
         ],
         os_list=[("Song 1.mp3", 12.1)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -115,13 +170,26 @@ sorter_test_cases = [
     SorterTestCase(
         description="Two CSV records and similar OS files",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
-            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=15),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=15,
+            ),
         ],
         os_list=[("Song 1.mp3", 12.1), ("Song 1(1).mp3", 14.8)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -129,6 +197,7 @@ sorter_test_cases = [
             ),
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 2",
                 artist="Artist 2",
                 duration=15,
@@ -139,14 +208,33 @@ sorter_test_cases = [
     SorterTestCase(
         description="Three CSV records and OS files matching first and last",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
-            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=13),
-            CSVTrack(title="Song 1", album="Album 3", artist="Artist 3", duration=17),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=13,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 3",
+                artist="Artist 3",
+                duration=17,
+            ),
         ],
         os_list=[("Song 1.mp3", 11.0), ("Song 1(1).mp3", 16.0)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,
@@ -154,6 +242,7 @@ sorter_test_cases = [
             ),
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 3",
                 artist="Artist 3",
                 duration=17,
@@ -164,13 +253,26 @@ sorter_test_cases = [
     SorterTestCase(
         description="Two CSV records and OS file duration exactly in the middle",
         csv_list=[
-            CSVTrack(title="Song 1", album="Album 1", artist="Artist 1", duration=10),
-            CSVTrack(title="Song 1", album="Album 2", artist="Artist 2", duration=13),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 1",
+                artist="Artist 1",
+                duration=10,
+            ),
+            CSVTrack(
+                title="Song 1",
+                trunc_title="Song 1",
+                album="Album 2",
+                artist="Artist 2",
+                duration=13,
+            ),
         ],
         os_list=[("Song 1.mp3", 11.5)],
         sorted_list=[
             CSVTrack(
                 title="Song 1",
+                trunc_title="Song 1",
                 album="Album 1",
                 artist="Artist 1",
                 duration=10,

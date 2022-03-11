@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # metadata.sort_by_metadata()
     # Parse the CSV file into records
     csv_records = csv.load_file(CSV_PATH)
-    unique_csv_records = set(csv_record.title for csv_record in csv_records)
+    unique_csv_records = set(csv_record.trunc_title for csv_record in csv_records)
 
     # Get a list of all files in the music root
     os_files_list = os.listdir(MUSIC_ROOT)

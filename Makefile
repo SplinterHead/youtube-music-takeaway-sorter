@@ -12,6 +12,9 @@ format:
 test:
 	MUSIC_ROOT="/music/root" poetry run pytest -vv -s
 
+.PHONY: check
+check: format test
+
 .PHONY: run
 run:
 	poetry run python yt-sorter.py

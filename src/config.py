@@ -11,5 +11,5 @@ MOVE_SOURCE = strtobool(os.getenv("MOVE_SOURCE", "False"))
 DRY_RUN = strtobool(os.getenv("DRY_RUN", "False"))
 
 # Constants
-DIR_UNSAFE_CHARS = "/><|:&"
+DIR_UNSAFE_CHARS = "/"
 TAKEOUT_UNSAFE_CHARS = ":?'\""

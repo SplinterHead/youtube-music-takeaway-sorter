@@ -12,4 +12,4 @@ DRY_RUN = strtobool(os.getenv("DRY_RUN", "False"))
 
 # Constants
 DIR_UNSAFE_CHARS = "/"
-TAKEOUT_UNSAFE_CHARS = ":?'\"&*"
+TAKEOUT_UNSAFE_CHARS = ":?'\"&*/"

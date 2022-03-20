@@ -22,11 +22,12 @@ class CSVTrack:
 
 
 def parse_row(csv_row: Any) -> Any:
+    extracted_title = csv_row["Song Title"].strip()
     return CSVTrack(
-        title=csv_row["Song Title"],
-        trunc_title=csv_row["Song Title"][:47],
-        album=csv_row["Album Title"],
-        artist=csv_row["Artist Names"],
+        title=extracted_title,
+        trunc_title=extracted_title[:47],
+        album=csv_row["Album Title"].strip(),
+        artist=csv_row["Artist Names"].strip(),
         duration=float(csv_row["Duration Seconds"]),
     )
 

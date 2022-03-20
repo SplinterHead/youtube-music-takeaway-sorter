@@ -50,6 +50,26 @@ def test_parse_csv_row_truncates_title():
     assert actual == expected
 
 
+def test_parse_csv_row_strips_whitespace():
+    csv_content = {
+        "Song Title": " song 1",
+        "Album Title": "album 1",
+        "Artist Names": "artist 1  ",
+        "Duration Seconds": 123.45,
+    }
+
+    expected = CSVTrack(
+        title="song 1",
+        trunc_title="song 1",
+        album="album 1",
+        artist="artist 1",
+        duration=123.45,
+    )
+
+    actual = parse_row(csv_content)
+    assert actual == expected
+
+
 @dataclass
 class CsvLoadTestCase:
     description: str

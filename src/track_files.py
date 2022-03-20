@@ -14,6 +14,7 @@ def safe_name(track_title: str) -> str:
     # Chars replaced by underscore
     for char in TAKEOUT_UNSAFE_CHARS:
         track_title = track_title.replace(char, "_")
+    track_title = re.sub("_+", "_", track_title)
     return re.escape(track_title[0:47])
 
 

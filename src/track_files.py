@@ -21,7 +21,7 @@ def safe_name(track_title: str) -> str:
 def search_names(track_title: str, os_files_list: List[str]) -> List[tuple]:
     matching_files = []
     # Should search through '(1)..(x)' for extracted duplicates
-    filename_regex = f"^{safe_name(track_title)}(\\([0-9]+\\))?.(mp3|vid)$"
+    filename_regex = f"^{safe_name(track_title)}(\\([0-9]+\\))?\\.(?!csv).+$"
     log.debug(f"Searching with the expression: {filename_regex}")
     for filename in os_files_list:
         if re.search(filename_regex, filename):

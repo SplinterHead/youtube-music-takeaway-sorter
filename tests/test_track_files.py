@@ -93,6 +93,13 @@ file_search_test_cases = [
         expected=[("Song 1.mp3", 10.0)],
     ),
     FileSearchTestCase(
+        description="Filenames with dots in the middle do not return on multiple searches",
+        file_names=["Song 1.mp3", "Song 1.2.mp3"],
+        durations=[10.0, 10.0],
+        search_term="Song 1",
+        expected=[("Song 1.mp3", 10.0)],
+    ),
+    FileSearchTestCase(
         description="Long filename searches are truncated in the search",
         file_names=["this is a really long title that far exceeds th.mp3"],
         durations=[10.0],
